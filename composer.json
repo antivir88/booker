@@ -1,0 +1,68 @@
+{
+    "name": "samdark/yii2-minimal",
+    "description": "Yii 2 minimal Application Template",
+    "keywords": ["yii", "framework", "minimal", "application template"],
+    "homepage": "https://github.com/samdark/yii2-minimal",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/samdark/yii2-minimal/issues?state=open",
+        "source": "https://github.com/samdark/yii2-minimal"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "~2.0.7",
+        "yiisoft/yii2-gii": "*"
+    },
+    "require-dev": {
+        "swagger-api/swagger-ui": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "swagger-api/swagger-ui",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/swagger-api/swagger-ui",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "config": {
+        "process-timeout": 1800
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::postCreateProject"
+        ],
+        "post-install-cmd": [
+            "bower install",
+            "./yii migrate/up --interactive=0 --migrationPath=./migrations"
+        ],
+        "post-update-cmd": [
+            "bower update",
+            "./yii migrate/up --interactive=0 --migrationPath=./migrations"
+        ]
+    },
+    "extra": {
+        "yii\\composer\\Installer::postCreateProject": {
+                "setPermission": [
+                    {
+                        "runtime": "0777",
+                        "web/assets": "0777",
+                        "yii": "0755"
+                    }
+                ],
+                "generateCookieValidationKey": [
+                    "config/web.php"
+                ]
+            },
+            "asset-installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+    }
+}
